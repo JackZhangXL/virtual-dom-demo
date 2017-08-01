@@ -26,7 +26,7 @@ const openBrowser = () => {
     const address = server.listeningApp.address();
     const url = `http://${address.address}:${address.port}`;
     console.log(`   server started: ${url}`);
-    open(`${url}/element.html`);
+    open(`${url}/demo.html`);
 };
 
 compiler.plugin('done', () => {
