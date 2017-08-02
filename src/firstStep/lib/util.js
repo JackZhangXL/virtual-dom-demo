@@ -4,26 +4,12 @@ _.type = function (obj) {
     return Object.prototype.toString.call(obj).replace(/\[object\s|\]/g, '')
 }
 
-_.isArray = function isArray (list) {
-    return _.type(list) === 'Array'
-}
-
-_.slice = function slice (arrayLike, index) {
-    return Array.prototype.slice.call(arrayLike, index)
-}
-
 _.truthy = function truthy (value) {
     return !!value
 }
 
 _.isString = function isString (list) {
     return _.type(list) === 'String'
-}
-
-_.each = function each (array, fn) {
-    for (var i = 0, len = array.length; i < len; i++) {
-        fn(array[i], i)
-    }
 }
 
 _.toArray = function toArray (listLike) {
