@@ -1,53 +1,54 @@
-var _ = require('./util')
-var patch = require('./patch')
-var listDiff = require('list-diff2')
+import _ from './util';
+import patch from './patch';
+import listDiff from 'list-diff2';
 
-function diff (oldTree, newTree) {
-  var index = 0
-  var patches = {}
-  dfsWalk(oldTree, newTree, index, patches)
-  return patches
+function diff(oldTree, newTree) {
+    const index = 0;
+    const patches = {};
+    walk(oldTree, newTree, patches, index);
+    return patches;
 }
 
-function dfsWalk (oldNode, newNode, index, patches) {
-  var currentPatch = []
+function walk(oldNode, newNode, patches, index) {
+    if (oldNode === newNode) {
+        return;
+    }
 
-  // Node is removed.
-  if (newNode === null) {
-    // Real DOM node will be removed when perform reordering, so has no needs to do anthings in here
-  // TextNode content replacing
-  } else if (_.isString(oldNode) && _.isString(newNode)) {
-    if (newNode !== oldNode) {
-      currentPatch.push({ type: patch.TEXT, content: newNode })
-    }
-  // Nodes are the same, diff old node's props and children
-  } else if (
-      oldNode.tagName === newNode.tagName &&
-      oldNode.key === newNode.key
-    ) {
-    // Diff props
-    var propsPatches = diffProps(oldNode, newNode)
-    if (propsPatches) {
-      currentPatch.push({ type: patch.PROPS, props: propsPatches })
-    }
-    // Diff children. If the node has a `ignore` property, do not diff children
-    if (!isIgnoreChildren(newNode)) {
-      diffChildren(
+    let currentPatch = [];
+
+    // Node is removed.
+    if (newNode === null) {
+        // Real DOM node will be removed when perform reordering, so has no needs to do anythings in here
+        // TextNode content replacing
+    } else if (typeof oldNode === 'string' && typeof newNode === 'string') {
+        if (newNode !== oldNode) {
+            currentPatch.push({ type: patch.TEXT, content: newNode })
+        }
+        // Nodes are the same, diff old node's props and children
+    } else if (oldNode.tagName === newNode.tagName && oldNode.key === newNode.key) {
+        // Diff props
+        var propsPatches = diffProps(oldNode, newNode)
+        if (propsPatches) {
+        currentPatch.push({ type: patch.PROPS, props: propsPatches })
+        }
+        // Diff children. If the node has a `ignore` property, do not diff children
+        if (!isIgnoreChildren(newNode)) {
+        diffChildren(
         oldNode.children,
         newNode.children,
         index,
         patches,
         currentPatch
-      )
+        )
+        }
+        // Nodes are not the same, replace the old node with new node
+    } else {
+        currentPatch.push({ type: patch.REPLACE, node: newNode })
     }
-  // Nodes are not the same, replace the old node with new node
-  } else {
-    currentPatch.push({ type: patch.REPLACE, node: newNode })
-  }
 
-  if (currentPatch.length) {
-    patches[index] = currentPatch
-  }
+    if (currentPatch.length) {
+        patches[index] = currentPatch
+    }
 }
 
 function diffChildren (oldChildren, newChildren, index, patches, currentPatch) {
@@ -66,7 +67,7 @@ function diffChildren (oldChildren, newChildren, index, patches, currentPatch) {
     currentNodeIndex = (leftNode && leftNode.count)
       ? currentNodeIndex + leftNode.count + 1
       : currentNodeIndex + 1
-    dfsWalk(child, newChild, currentNodeIndex, patches)
+    walk(child, newChild, patches, currentNodeIndex)
     leftNode = child
   });
 }
@@ -109,4 +110,4 @@ function isIgnoreChildren (node) {
   return (node.props && node.props.hasOwnProperty('ignore'))
 }
 
-module.exports = diff
+export default diff;

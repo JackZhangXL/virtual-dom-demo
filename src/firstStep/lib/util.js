@@ -1,16 +1,8 @@
 var _ = exports
 
-_.type = function (obj) {
-    return Object.prototype.toString.call(obj).replace(/\[object\s|\]/g, '')
-}
-
 // _.truthy = function truthy (value) {
 //     return !!value
 // }
-
-_.isString = function isString (list) {
-    return _.type(list) === 'String'
-}
 
 _.toArray = function toArray (listLike) {
     if (!listLike) {
