@@ -92,6 +92,7 @@ function diff(oldTree, newTree) {
     walk(oldTree, newTree, patches, index);
     return patches;
 }
+
 // function isIgnoreChildren (node) {
 //     return (node.props && node.props.hasOwnProperty('ignore'));
 // }
