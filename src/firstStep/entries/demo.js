@@ -47,7 +47,6 @@ const renderVirtualDom = () => {
     document.getElementById('virtualDom').appendChild(root);
 
     const newTree = Element('div', { id: 'virtual-container' }, [
-        Element('h3', { style: 'color: red' }, ['Virtual DOM']),
         Element('p', { style: 'color: red' }, ['after update']),
         Element('ul', {}, [
             Element('li', { class: 'item red' }, ['Update Item 1']),

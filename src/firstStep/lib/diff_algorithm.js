@@ -11,8 +11,8 @@
  *                  - moves is a list of actions that telling how to remove and insert
  */
 function diffAlgorithm (oldList, newList, key) {
-    var oldMap = makeKeyIndexAndFree(oldList, key)
-    var newMap = makeKeyIndexAndFree(newList, key)
+    var oldMap = makeKeyIndexAndFree(oldList, key); console.log('oldMap', oldMap);
+    var newMap = makeKeyIndexAndFree(newList, key); console.log('newMap', newMap);
 
     var newFree = newMap.free
 
