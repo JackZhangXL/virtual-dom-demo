@@ -10,7 +10,7 @@ function patch(node, patches) {
     dfsWalk(node, walker, patches);
 }
 
-function dfsWalk (node, walker, patches) {
+function dfsWalk(node, walker, patches) {
     var currentPatches = patches[walker.index];
 
     var len = node.childNodes ? node.childNodes.length : 0;
@@ -54,7 +54,7 @@ function applyPatches(node, currentPatches) {
     });
 }
 
-function setProps (node, props) {
+function setProps(node, props) {
     for (var key in props) {
         if (props[key] === void 666) {
             node.removeAttribute(key);
@@ -65,7 +65,7 @@ function setProps (node, props) {
     }
 }
 
-function reorderChildren (node, moves) {
+function reorderChildren(node, moves) {
     var staticNodeList = _.toArray(node.childNodes);
     var maps = {};
 

@@ -1,9 +1,9 @@
-import listDiff from 'list-diff2';
+import diffAlgorithm from './diff_algorithm';
 import patch from './patch';
 
 function diffChildren(oldChildren, newChildren, patches, index, currentPatch) {
-    var diffs = listDiff(oldChildren, newChildren, 'key')
-    newChildren = diffs.children
+    var diffs = diffAlgorithm(oldChildren, newChildren, 'key');
+    newChildren = diffs.children;
 
     if (diffs.moves.length) {
         const reorderPatch = { type: patch.REORDER, moves: diffs.moves };
@@ -55,9 +55,8 @@ function walk(oldNode, newNode, patches, index) {
 
     const currentPatch = [];
 
-    // Node is removed.
     if (newNode === null) {
-        // Real DOM node will be removed when perform reordering, so has no needs to do anythings in here
+        // do nothing
     } else if (typeof oldNode === 'string' && typeof newNode === 'string') {
         // TextNode content replacing
         if (newNode !== oldNode) {
@@ -72,10 +71,10 @@ function walk(oldNode, newNode, patches, index) {
             currentPatch.push({ type: patch.PROPS, props: propsPatches });
         }
         // Diff children. If the node has a `ignore` property, do not diff children
+        diffChildren(oldNode.children, newNode.children, patches, index, currentPatch);
         // if (!isIgnoreChildren(newNode)) {
         //     diffChildren(oldNode.children, newNode.children, patches, index, currentPatch);
         // }
-        diffChildren(oldNode.children, newNode.children, patches, index, currentPatch);
     } else {
         // Nodes are not the same, replace the old node with new node
         currentPatch.push({ type: patch.REPLACE, node: newNode });
