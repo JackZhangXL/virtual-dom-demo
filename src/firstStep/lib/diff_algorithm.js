@@ -2,7 +2,6 @@ function getItemKey(item, key) {
     if (!item || !key) {
         return undefined;
     }
-
     return typeof key === 'string' ? item[key] : key(item);
 }
 
@@ -14,7 +13,8 @@ function getItemKey(item, key) {
 function makeKeyIndexAndFree(list, key) {
     const keyIndex = {};
     const free = [];
-    for (let i = 0, len = list.length; i < len; i++) {
+    const len = list.length;
+    for (let i = 0; i < len; i++) {
         const item = list[i];
         const itemKey = getItemKey(item, key);
         if (itemKey) {
@@ -37,8 +37,8 @@ function makeKeyIndexAndFree(list, key) {
  *                  - moves is a list of actions that telling how to remove and insert
  */
 function diffAlgorithm(oldList, newList, key) {
-    const oldMap = makeKeyIndexAndFree(oldList, key);
-    const newMap = makeKeyIndexAndFree(newList, key);
+    const oldMap = makeKeyIndexAndFree(oldList, key); console.log('oldMap', oldMap);
+    const newMap = makeKeyIndexAndFree(newList, key); console.log('newMap', newMap);
 
     const newFree = newMap.free;
 
@@ -50,13 +50,12 @@ function diffAlgorithm(oldList, newList, key) {
     // a simulate list to manipulate
     const children = [];
     let i = 0;
-    let item;
     let itemKey;
     let freeIndex = 0;
 
     // fist pass to check item in old list: if it's removed or not
     while (i < oldList.length) {
-        item = oldList[i];
+        const item = oldList[i];
         itemKey = getItemKey(item, key);
         if (itemKey) {
             if (!newKeyIndex.hasOwnProperty(itemKey)) {
@@ -99,7 +98,7 @@ function diffAlgorithm(oldList, newList, key) {
     // j is cursor pointing to a item in simulateList
     let j = (i = 0);
     while (i < newList.length) {
-        item = newList[i];
+        const item = newList[i];
         itemKey = getItemKey(item, key);
 
         const simulateItem = simulateList[j];

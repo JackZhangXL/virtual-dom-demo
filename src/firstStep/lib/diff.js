@@ -2,7 +2,7 @@ import diffAlgorithm from './diff_algorithm';
 import patch from './patch';
 
 function diffChildren(oldChildren, newChildren, patches, index, currentPatch) {
-    var diffs = diffAlgorithm(oldChildren, newChildren, 'key');
+    const diffs = diffAlgorithm(oldChildren, newChildren, 'key');
     newChildren = diffs.children;
 
     if (diffs.moves.length) {
