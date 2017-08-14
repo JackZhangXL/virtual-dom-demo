@@ -1,4 +1,4 @@
-import diffAlgorithm from './diff_algorithm';
+import { diffAlgorithm } from './diff_algorithm';
 import patch from './patch';
 
 function diffChildren(oldChildren, newChildren, patches, index, currentPatch) {
