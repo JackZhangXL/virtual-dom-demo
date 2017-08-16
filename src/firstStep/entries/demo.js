@@ -34,26 +34,36 @@ render(
 
 const renderVirtualDom = () => {
     const tree = Element('div', { id: 'virtual-container' }, [
-        Element('h3', {}, ['Virtual DOM']),
-        Element('p', {}, ['before update']),
+        Element('p', {}, ['Virtual DOM']),
         Element('ul', {}, [
             Element('li', { class: 'item' }, ['Item 1']),
             Element('li', { class: 'item' }, ['Item 2']),
             Element('li', { class: 'item' }, ['Item 3']),
         ]),
+        Element('div', {}, ['Hello Virtual DOM']),
     ]);
 
     const root = tree.render();
     document.getElementById('virtualDom').appendChild(root);
 
     const newTree = Element('div', { id: 'virtual-container' }, [
-        Element('p', { style: 'color: red' }, ['after update']),
-        Element('ul', {}, [
-            Element('li', { class: 'item red' }, ['Update Item 1']),
-            Element('li', { class: 'item red' }, ['Update Item 2']),
-            Element('li', { class: 'item red' }, ['Update Item 3']),
+        Element('h3', {}, ['Virtual DOM']),             // REPLACE
+        Element('ul', { class: 'marginLeft10' }, [      // PROPS
+            Element('li', { class: 'item' }, ['Item 2 Update']),    // TEXT
+            Element('li', { class: 'item' }, ['Item 3']),
         ]),
+        Element('div', {}, ['Hello Virtual DOM']),      // REORDER
     ]);
+
+    // const newTree = Element('div', { id: 'virtual-container' }, [
+    //     Element('p', { style: 'color: red' }, ['Virtual DOM']),
+    //     Element('ul', {}, [
+    //         Element('li', { class: 'item red' }, ['Update Item 1']),
+    //         Element('li', { class: 'item red' }, ['Update Item 2']),
+    //         Element('li', { class: 'item red' }, ['Update Item 3']),
+    //     ]),
+    //     Element('div', { class: 'item red' }, ['Hello World']),
+    // ]);
 
     setTimeout(() => {
         const patches = Diff(tree, newTree);

@@ -1,4 +1,4 @@
-import _ from './util';
+import { setAttr } from './util';
 
 const REPLACE = 0;
 const REORDER = 1;
@@ -10,13 +10,13 @@ function setProps(node, props) {
         if (props[key] === undefined) {
             node.removeAttribute(key);
         } else {
-            _.setAttr(node, key, props[key]);
+            setAttr(node, key, props[key]);
         }
     }
 }
 
 function reorderChildren(node, moves) {
-    const staticNodeList = _.toArray(node.childNodes);
+    const staticNodeList = Array.from(node.childNodes);
     const maps = {};
 
     staticNodeList.forEach((item) => {
@@ -66,7 +66,7 @@ function applyPatches(node, currentPatches) {
                 if (node.textContent) {
                     node.textContent = currentPatch.content;
                 } else {
-                    // fuck ie
+                    // ie
                     node.nodeValue = currentPatch.content;
                 }
                 break;

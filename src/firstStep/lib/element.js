@@ -1,4 +1,4 @@
-import _ from './util';
+import { setAttr } from './util';
 
 function Element(tagName, props, children) {
     if (!(this instanceof Element)) {
@@ -33,7 +33,7 @@ Element.prototype.render = function() {             // eslint-disable-line
     const props = this.props;
 
     for (const propName in props) {                 // eslint-disable-line
-        _.setAttr(el, propName, props[propName]);   // eslint-disable-line
+        setAttr(el, propName, props[propName]);   // eslint-disable-line
     }
 
     this.children.forEach((child) => {

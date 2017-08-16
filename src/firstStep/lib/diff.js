@@ -3,6 +3,7 @@ import patch from './patch';
 
 function diffChildren(oldChildren, newChildren, patches, index, currentPatch) {
     const diffs = diffAlgorithm(oldChildren, newChildren, 'key');
+    console.log('diffs', diffs);
     newChildren = diffs.children;
 
     if (diffs.moves.length) {
@@ -79,7 +80,8 @@ function walk(oldNode, newNode, patches, index) {
         // Nodes are not the same, replace the old node with new node
         currentPatch.push({ type: patch.REPLACE, node: newNode });
     }
-
+console.log('patches', patches);
+console.log('currentPatch', currentPatch);
     if (currentPatch.length) {
         patches[index] = currentPatch;
     }
