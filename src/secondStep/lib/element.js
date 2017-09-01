@@ -33,7 +33,7 @@ Element.prototype.render = function() {             // eslint-disable-line
     const props = this.props;
 
     for (const propName in props) {                 // eslint-disable-line
-        setAttr(el, propName, props[propName]);     // eslint-disable-line
+        setAttr(el, propName, props[propName]);   // eslint-disable-line
     }
 
     this.children.forEach((child) => {

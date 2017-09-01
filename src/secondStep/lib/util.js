@@ -1,3 +1,7 @@
+// _.truthy = function truthy (value) {
+//     return !!value
+// }
+
 export const setAttr = (node, key, value) => {
     switch (key) {
         case 'style':
