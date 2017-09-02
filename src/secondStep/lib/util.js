@@ -12,7 +12,6 @@ export const setAttr = (node, key, value) => {
             if (tagName === 'input' || tagName === 'textarea') {
                 node.value = value;
             } else {
-                // if it is not a input or textarea, use `setAttribute` to set
                 node.setAttribute(key, value);
             }
             break;
