@@ -2,6 +2,9 @@ import { setAttr } from './util';
 
 function Element(tagName, props, children) {
     if (!(this instanceof Element)) {
+        // if (!Array.isArray(children) && children != null) {
+        //     children = arguments.slice(2).filter(_.truthy);
+        // }
         return new Element(tagName, props, children);
     }
 
@@ -11,9 +14,11 @@ function Element(tagName, props, children) {
     this.key = props ? props.key : undefined;
 
     let count = 0;
-    this.children.forEach((child) => {
+    this.children.forEach((child, i) => {
         if (child instanceof Element) {
             count += child.count;
+        // } else {
+        //     children[i] = '' + child;
         }
         count++;
     });

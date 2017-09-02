@@ -94,4 +94,8 @@ function diff(oldTree, newTree) {
     return patches;
 }
 
+// function isIgnoreChildren (node) {
+//     return (node.props && node.props.hasOwnProperty('ignore'));
+// }
+
 export default diff;
