@@ -30,7 +30,7 @@ function diffProps(oldNode, newNode) {
     let isSame = true;
 
     // find out different props
-    for (key in oldProps) {         // eslint-disable-line
+    for (key in oldProps) {
         if (newProps[key] !== oldProps[key]) {
             isSame = false;
             propsPatches[key] = newProps[key];
@@ -38,7 +38,7 @@ function diffProps(oldNode, newNode) {
     }
 
     // find out new props
-    for (key in newProps) {         // eslint-disable-line
+    for (key in newProps) {
         if (!oldProps.hasOwnProperty(key)) {
             isSame = false;
             propsPatches[key] = newProps[key];

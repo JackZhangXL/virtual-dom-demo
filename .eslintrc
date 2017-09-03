@@ -3,6 +3,8 @@
     "rules": {
         "import/no-unresolved": "off",
         "no-prototype-builtins": "off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "no-use-before-define": "off",
+        "no-restricted-syntax": "off",
     }
 }
