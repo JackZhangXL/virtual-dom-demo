@@ -3,21 +3,6 @@
  * git address: https://github.com/livoras/list-diff/blob/master/lib/diff.js
  * */
 
-const moves = [];
-let simulateList = [];
-
-function remove(index) {
-    moves.push({ index, type: 0 });
-}
-
-function insert(index, item) {
-    moves.push({ index, item, type: 1 });
-}
-
-function removeSimulate(index) {
-    simulateList.splice(index, 1);
-}
-
 function getItemKey(item, key) {
     if (!item || !key) return undefined;
     return typeof key === 'string' ? item[key] : key(item);
@@ -62,6 +47,8 @@ function diffAlgorithm(oldList, newList, key) {
     const oldKeyIndex = oldMap.keyIndex;
     const newKeyIndex = newMap.keyIndex;
 
+    const moves = [];
+
     // a simulate list to manipulate
     const children = [];
     let i = 0;
@@ -88,13 +75,13 @@ function diffAlgorithm(oldList, newList, key) {
         i++;
     }
 
-    simulateList = children.slice(0);
+    const simulateList = children.slice(0);
 
     // remove items no longer exist
     i = 0;
     while (i < simulateList.length) {
         if (simulateList[i] === null) {
-            remove(i);
+            moves.push({ index: i, type: 0 });
             removeSimulate(i);
         } else {
             i++;
@@ -116,22 +103,22 @@ function diffAlgorithm(oldList, newList, key) {
                 j++;
             } else if (!oldKeyIndex.hasOwnProperty(itemKey)) {
                 // new item, just inesrt it
-                insert(i, item);
+                moves.push({ index: i, item, type: 1 });
             } else {
                 // if remove current simulateItem make item in right place
                 // then just remove it
                 const nextItemKey = getItemKey(simulateList[j + 1], key);
                 if (nextItemKey === itemKey) {
-                    remove(i);
+                    moves.push({ index: i, type: 0 });
                     removeSimulate(j);
                     j++; // after removing, current j is right, just jump to next one
                 } else {
                     // else insert item
-                    insert(i, item);
+                    moves.push({ index: i, item, type: 1 });
                 }
             }
         } else {
-            insert(i, item);
+            moves.push({ index: i, item, type: 1 });
         }
 
         i++;
@@ -140,8 +127,12 @@ function diffAlgorithm(oldList, newList, key) {
     // if j is not remove to the end, remove all the rest item
     let k = 0;
     while (j++ < simulateList.length) {
-        remove(k + i);
+        moves.push({ index: k + i, type: 0 });
         k++;
+    }
+
+    function removeSimulate(index) {
+        simulateList.splice(index, 1);
     }
 
     return {
