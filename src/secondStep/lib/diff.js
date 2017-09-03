@@ -3,7 +3,6 @@ import patch from './patch';
 
 function diffChildren(oldChildren, newChildren, patches, index, currentPatch) {
     const diffs = diffAlgorithm(oldChildren, newChildren, 'key');
-    console.log('diffs', diffs);
     newChildren = diffs.children;
 
     if (diffs.moves.length) {
@@ -68,20 +67,15 @@ function walk(oldNode, newNode, patches, index) {
         // Diff props
         const propsPatches = diffProps(oldNode, newNode);
         if (propsPatches) {
-            console.log('propsPatches', propsPatches);
             currentPatch.push({ type: patch.PROPS, props: propsPatches });
         }
         // Diff children. If the node has a `ignore` property, do not diff children
         diffChildren(oldNode.children, newNode.children, patches, index, currentPatch);
-        // if (!isIgnoreChildren(newNode)) {
-        //     diffChildren(oldNode.children, newNode.children, patches, index, currentPatch);
-        // }
     } else {
         // Nodes are not the same, replace the old node with new node
         currentPatch.push({ type: patch.REPLACE, node: newNode });
     }
-console.log('patches', patches);
-console.log('currentPatch', currentPatch);
+
     if (currentPatch.length) {
         patches[index] = currentPatch;
     }

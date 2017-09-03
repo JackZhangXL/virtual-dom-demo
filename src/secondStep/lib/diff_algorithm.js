@@ -55,9 +55,7 @@ function makeKeyIndexAndFree(list, key) {
  */
 function diffAlgorithm(oldList, newList, key) {
     const oldMap = makeKeyIndexAndFree(oldList, key);
-    console.log('oldMap', oldMap);
     const newMap = makeKeyIndexAndFree(newList, key);
-    console.log('newMap', newMap);
 
     const newFree = newMap.free;
 
