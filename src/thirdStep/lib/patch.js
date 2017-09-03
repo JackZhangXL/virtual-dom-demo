@@ -38,9 +38,7 @@ function reorderChildren(node, moves) {
         } else if (move.type === 1) { // insert item
             const insertNode = maps[move.item.key]
                 ? maps[move.item.key] // reuse old item
-                : (typeof move.item === 'object')
-                ? move.item.render()
-                : document.createTextNode(move.item);
+                : (typeof move.item === 'object') ? move.item.render() : document.createTextNode(move.item);
             staticNodeList.splice(index, 0, insertNode);
             node.insertBefore(insertNode, node.childNodes[index] || null);
         }
@@ -50,12 +48,13 @@ function reorderChildren(node, moves) {
 function applyPatches(node, currentPatches) {
     currentPatches.forEach((currentPatch) => {
         switch (currentPatch.type) {
-            case REPLACE:
+            case REPLACE: {
                 const newNode = (typeof currentPatch.node === 'string')
                     ? document.createTextNode(currentPatch.node)
                     : currentPatch.node.render();
                 node.parentNode.replaceChild(newNode, node);
                 break;
+            }
             case REORDER:
                 reorderChildren(node, currentPatch.moves);
                 break;
