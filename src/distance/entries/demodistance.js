@@ -9,7 +9,7 @@ export default class Demo extends Component {
         return a < b ? (a < c ? a : c) : (b < c ? b : c);
     };
 
-    static Levenshtein_Distance = (s, t) => {
+    static LevenshteinDistance = (s, t) => {
         const sLength = s.length;     // length of s
         const mLength = t.length;     // length of t
         const d = [];           // matrix
@@ -47,7 +47,7 @@ export default class Demo extends Component {
                 }
 
                 // Step 6
-                d[i][j] = Demo.Minimum(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + cost);
+                d[i][j] = Demo.Minimum(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
             }
         }
 
@@ -55,11 +55,11 @@ export default class Demo extends Component {
         return d[sLength][mLength];
     };
 
-    //求两个字符串的相似度,返回相似度百分比
-    static Levenshtein_Distance_Percent = (s, t) => {
+    // 求两个字符串的相似度,返回相似度百分比
+    static LevenshteinDistancePercent = (s, t) => {
         const l = s.length > t.length ? s.length : t.length;
-        const d = Demo.Levenshtein_Distance(s, t);
-        return (1 - d / l).toFixed(4);
+        const d = Demo.LevenshteinDistance(s, t);
+        return (1 - (d / l)).toFixed(4);
     };
 
     constructor() {
@@ -77,7 +77,7 @@ export default class Demo extends Component {
             value2,
         } = this.state;
 
-        const result = Demo.Levenshtein_Distance_Percent(value1, value2);
+        const result = Demo.LevenshteinDistancePercent(value1, value2);
         this.setState({
             result,
         });
@@ -106,17 +106,17 @@ export default class Demo extends Component {
             <div>
                 <h3>Levenshtein Distance</h3>
                 <Input
-                    style={{marginTop: '20px', width: '200px', display: 'block'}}
+                    style={{ marginTop: '20px', width: '200px', display: 'block' }}
                     value={value1}
                     onChange={this.handleChange1}
                 />
                 <Input
-                    style={{marginTop: '20px', width: '200px', display: 'block'}}
+                    style={{ marginTop: '20px', width: '200px', display: 'block' }}
                     value={value2}
                     onChange={this.handleChange2}
                 />
-                <Button style={{marginTop: '20px'}} onClick={this.handleClick}>计算</Button>
-                <p style={{marginTop: '20px', fontSize: '18px'}}>Result: {result}</p>
+                <Button style={{ marginTop: '20px' }} onClick={this.handleClick}>计算</Button>
+                <p style={{ marginTop: '20px', fontSize: '18px' }}>Result: {result}</p>
             </div>
         );
     }
